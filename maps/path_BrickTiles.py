@@ -1,5 +1,7 @@
 import numpy as np
 
+__package__ = 'maps'
+
 PATH = np.array([
     [1,1,1,1,1,1,1,1,1,1,1],
     [1,0,0,0,0,0,1,1,1,1,1],
