@@ -2,10 +2,11 @@ import sys, pygame
 from pygame.constants import QUIT
 import pygame.locals
 import numpy as np
-sys.path.insert(0, 'Classes')
+import RPG
 
-from Classes import ClassMap
-from maps import path_BrickTiles
+from RPG.Classes import ClassMap
+from RPG.maps import path_BrickTiles
+
 
 # we get the path via the other file
 map_n1 = path_BrickTiles.PATH
