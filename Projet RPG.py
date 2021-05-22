@@ -2,10 +2,16 @@ import sys, pygame
 from pygame.constants import QUIT
 import pygame.locals
 import numpy as np
-import RPG
+import pathlib
+
+
+#sys.path.insert(0,pathlib.Path('RPG/Classes').absolute())
+#sys.path.insert(0,pathlib.Path('RPG/maps').absolute())
+#sys.path.insert(0,pathlib.Path('RPG/character').absolute())
 
 from RPG.Classes import ClassMap
 from RPG.maps import path_BrickTiles
+from RPG.character import *
 
 
 # we get the path via the other file
@@ -13,7 +19,7 @@ map_n1 = path_BrickTiles.PATH
 
 
 # the map is setup in an instance of the Class Map
-zeMap = ClassMap.Map(1100,800, map_n1, 'maps/BrickTiles_surface_test.png')
+zeMap = ClassMap.Map(1100,800, map_n1,'maps/BrickTiles_surface_test.png')
 
 
 # testing some methods
@@ -41,6 +47,7 @@ PLAYER_SIZE = PLAYER_HEIGHT,PLAYER_WIDTH = 100,74
 map = pygame.image.load(zeMap.getfileImage()).convert()
 map = pygame.transform.scale(map,(1100,800))
 
+#file_pathCharacter = str(pathlib.Path('RPG/character').absolute())
 
 # arrays to contain the different sprites
 player = np.array([
