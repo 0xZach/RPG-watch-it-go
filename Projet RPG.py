@@ -2,16 +2,9 @@ import sys, pygame
 from pygame.constants import QUIT
 import pygame.locals
 import numpy as np
-import pathlib
 
-
-#sys.path.insert(0,pathlib.Path('RPG/Classes').absolute())
-#sys.path.insert(0,pathlib.Path('RPG/maps').absolute())
-#sys.path.insert(0,pathlib.Path('RPG/character').absolute())
-
-from RPG.Classes import ClassMap
-from RPG.maps import path_BrickTiles
-from RPG.character import *
+from Classes import ClassMap
+from maps import path_BrickTiles
 
 
 # we get the path via the other file
