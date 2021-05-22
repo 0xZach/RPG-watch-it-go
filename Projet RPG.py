@@ -2,6 +2,8 @@ import sys, pygame
 from pygame.constants import QUIT
 import pygame.locals
 import numpy as np
+sys.path.insert(0, 'Classes')
+
 from Classes import ClassMap
 from maps import path_BrickTiles
 
