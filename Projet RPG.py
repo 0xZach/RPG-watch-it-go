@@ -2,10 +2,12 @@ import sys, pygame
 from pygame.constants import QUIT
 import pygame.locals
 import numpy as np
+import pathlib
 
 __package__ = 'RPG'
 
 from Classes import ClassMap
+from Classes import PlayerMove
 from maps import path_BrickTiles
 
 #from RPG.Classes import ClassMap
@@ -14,13 +16,16 @@ from maps import path_BrickTiles
 # sys.path.append('./Classes')
 # sys.path.append('./maps')
 
+file_absolutePath = str(pathlib.Path('RPG').absolute())
 
 # we get the path via the other file
 map_n1 = path_BrickTiles.PATH
 
 
 # the map is setup in an instance of the Class Map
-zeMap = ClassMap.Map(1100,800, map_n1,'maps/BrickTiles_surface_test.png')
+zeMap = ClassMap.Map(1100,800, map_n1, file_absolutePath + '\maps\BrickTiles_surface_test.png')
+
+
 
 
 # testing some methods
@@ -43,48 +48,55 @@ TILE_SIZE = TILE_HEIGHT, TILE_WIDTH = (WIN_HEIGHT/10),(WIN_WIDTH/10)
 # size of the player (temporary)
 PLAYER_SIZE = PLAYER_HEIGHT,PLAYER_WIDTH = 100,74
 
+# old way to get the coordinates of the player
+# coord_x = (TILE_WIDTH*3)
+# coord_y = (TILE_HEIGHT*6)
+# row = 3
+# line = 6
+
+# new way
+# the movement of the player is setup in an instance of the Class Player_Moving
+zePlayerMove = PlayerMove.Player_Moving(np.array([TILE_WIDTH*1,1]),np.array([TILE_HEIGHT*1,1]),True)
 
 # How to load an image and scale it
 map = pygame.image.load(zeMap.getfileImage()).convert()
 map = pygame.transform.scale(map,(1100,800))
 
-#file_pathCharacter = str(pathlib.Path('RPG/character').absolute())
-
 # arrays to contain the different sprites
 player = np.array([
 
-pygame.transform.scale(pygame.image.load('character/Sprite 1-1.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)), # face north
+pygame.transform.scale(pygame.image.load(file_absolutePath + '\character\Sprite 1-1.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)), # face north
 
-pygame.transform.scale(pygame.image.load('character/Sprite 1-2.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)), # face left
+pygame.transform.scale(pygame.image.load(file_absolutePath + '\character\Sprite 1-2.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)), # face left
 
-pygame.transform.scale(pygame.image.load('character/Sprite 1-3.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)), # face right
+pygame.transform.scale(pygame.image.load(file_absolutePath + '\character\Sprite 1-3.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)), # face right
 
-pygame.transform.scale(pygame.image.load('character/Sprite 1-4.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)) # face south
+pygame.transform.scale(pygame.image.load(file_absolutePath + '\character\Sprite 1-4.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)) # face south
 ])
 
 player_walk = np.array([
     [
-    pygame.transform.scale(pygame.image.load('character/Sprite 2-1.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)),
+    pygame.transform.scale(pygame.image.load(file_absolutePath + '\character\Sprite 2-1.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)),
     
-    pygame.transform.scale(pygame.image.load('character/Sprite 2-2.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)) 
+    pygame.transform.scale(pygame.image.load(file_absolutePath + '\character\Sprite 2-2.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)) 
     ], # up walk
     
     [
-    pygame.transform.scale(pygame.image.load('character/Sprite 2-4.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)),
+    pygame.transform.scale(pygame.image.load(file_absolutePath + '\character\Sprite 2-4.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)),
     
-    pygame.transform.scale(pygame.image.load('character/Sprite 2-3.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)) 
+    pygame.transform.scale(pygame.image.load(file_absolutePath + '\character\Sprite 2-3.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)) 
     ], # left walk
 
     [
-    pygame.transform.scale(pygame.image.load('character/Sprite 2-5.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)),
+    pygame.transform.scale(pygame.image.load(file_absolutePath + '\character\Sprite 2-5.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)),
     
-    pygame.transform.scale(pygame.image.load('character/Sprite 2-6.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)) 
+    pygame.transform.scale(pygame.image.load(file_absolutePath + '\character\Sprite 2-6.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)) 
     ], # right walk
     
     [
-    pygame.transform.scale(pygame.image.load('character/Sprite 2-7.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)),
+    pygame.transform.scale(pygame.image.load(file_absolutePath + '\character\Sprite 2-7.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT)),
     
-    pygame.transform.scale(pygame.image.load('character/Sprite 2-8.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT))
+    pygame.transform.scale(pygame.image.load(file_absolutePath + '\character\Sprite 2-8.png').convert_alpha(), (PLAYER_WIDTH,PLAYER_HEIGHT))
     ] # down walk
 ])
 
@@ -98,10 +110,7 @@ player_walk = np.array([
 # TODO: make a function/method 'getCoordinates' that calculates this
 # TODO: make a function 'move' that changes the place that we see and on the path
 # it has to be based on the the path ofc, and on the size of 1 tile
-coord_x = (TILE_WIDTH*3)
-coord_y = (TILE_HEIGHT*6)
-row = 3
-line = 6
+
 #print(coord_x,coord_y)
 
 # fills the background with black
@@ -111,7 +120,7 @@ root.fill((0,0,0))
 root.blit(map,map.get_rect())
 
 # Display the character **after** the background, so it will be **on top**
-root.blit(player[3], (coord_x, coord_y))
+root.blit(player[3], (zePlayerMove.getrealPos()[0], zePlayerMove.getrealPos()[1]))
 
 #print(map_n1)
 while True:
@@ -120,12 +129,57 @@ while True:
 
     for event in pygame.event.get():
         
-        if event.type == QUIT  or key_pressed[pygame.K_F4]:
+        if event.type == QUIT or key_pressed[pygame.K_F4]:
             pygame.quit()
             sys.exit()
 
+        
         if key_pressed[pygame.K_UP]:
             
+            # new version
+
+            # we need to convert these to ints because for god knows the reason it's just *always* taken as floats
+            # in the instance of the object
+            line = int(zePlayerMove.getmapPos()[1])
+            row = int(zePlayerMove.getmapPos()[0])
+
+            if map_n1[line-1][row] == 0:
+            
+                zePlayerMove.setmapPosY(line-1)
+
+
+                for i in range(10):
+                    
+                    zePlayerMove.setrealPosY(zePlayerMove.getrealPos()[1]-TILE_HEIGHT/10)
+                    
+                    if i == 0 :
+                        root.blit(map,map.get_rect())
+                        root.blit(player[0], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
+                    elif i >= 2 and i < 9 :
+                        root.blit(map,map.get_rect())
+                        if zePlayerMove.getLastMove() == True :
+                            root.blit(player_walk[0][0], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
+                            
+                        elif zePlayerMove.getLastMove() == False :
+                            root.blit(player_walk[0][1], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
+                    elif i == 9 :
+                        root.blit(map,map.get_rect())
+                        root.blit(player[0], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
+
+                    pygame.display.flip()
+                    clock.tick(MAX_FPS)
+
+                if zePlayerMove.getLastMove() == True :
+                    zePlayerMove.setLastMove(False)
+
+                elif zePlayerMove.getLastMove() == False :
+                    zePlayerMove.setLastMove(True)
+                
+            else:
+                root.blit(map,map.get_rect())
+                root.blit(player[0], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
+
+            """ # old version
             # if the path says it's ok to go there
             if map_n1[line-1][row] == 0:
                 
@@ -159,97 +213,129 @@ while True:
             else:
                 root.blit(map,map.get_rect())
                 root.blit(player[0], (coord_x,coord_y))
+            """
             #print(map_n1)
         
         elif key_pressed[pygame.K_LEFT]:
             
+            line = int(zePlayerMove.getmapPos()[1])
+            row = int(zePlayerMove.getmapPos()[0])
             if map_n1[line][row-1] == 0:
-    
-                map_n1[line][row] = 0
-
-                row -= 1
-
-                map_n1[line][row] = 2
             
-                for i in range(10):
-                    root.blit(map,map.get_rect())
-                    coord_x-=TILE_WIDTH/10
+                zePlayerMove.setmapPosX(row-1)
 
-                    if(i%2 != 0):
-                        root.blit(player_walk[1][0], (coord_x,coord_y))
-                    elif(i%2 == 0 and i < 9):
-                        root.blit(player_walk[1][1], (coord_x,coord_y))
+
+                for i in range(10):
                     
-                    if(i == 9):
+                    zePlayerMove.setrealPosX(zePlayerMove.getrealPos()[0]-TILE_WIDTH/10)
+                    
+                    if i == 0 :
                         root.blit(map,map.get_rect())
-                        root.blit(player[1], (coord_x,coord_y))
-                    
+                        root.blit(player[1], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
+                    elif i >= 2 and i < 9 :
+                        root.blit(map,map.get_rect())
+                        if zePlayerMove.getLastMove() == True :
+                            root.blit(player_walk[1][0], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
+                            
+                        elif zePlayerMove.getLastMove() == False :
+                            root.blit(player_walk[1][1], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
+                    elif i == 9 :
+                        root.blit(map,map.get_rect())
+                        root.blit(player[1], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
+
                     pygame.display.flip()
                     clock.tick(MAX_FPS)
+
+                if zePlayerMove.getLastMove() == True :
+                    zePlayerMove.setLastMove(False)
+
+                elif zePlayerMove.getLastMove() == False :
+                    zePlayerMove.setLastMove(True)
+                
             else:
                 root.blit(map,map.get_rect())
-                root.blit(player[1], (coord_x,coord_y))
+                root.blit(player[1], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
             #print(map_n1)
 
         elif key_pressed[pygame.K_RIGHT]:
             
+            line = int(zePlayerMove.getmapPos()[1])
+            row = int(zePlayerMove.getmapPos()[0])
             if map_n1[line][row+1] == 0:
-        
-                map_n1[line][row] = 0
 
-                row += 1
+                zePlayerMove.setmapPosX(row+1)
 
-                map_n1[line][row] = 2
-            
+
                 for i in range(10):
-                    root.blit(map,map.get_rect())
-                    coord_x+=TILE_WIDTH/10
                     
-                    if(i%2 != 0):
-                        root.blit(player_walk[2][0], (coord_x,coord_y))
-                    elif(i%2 == 0 and i < 9):
-                        root.blit(player_walk[2][1], (coord_x,coord_y))
+                    zePlayerMove.setrealPosX(zePlayerMove.getrealPos()[0]+TILE_WIDTH/10)
                     
-                    if(i == 9):
+                    if i == 0 :
                         root.blit(map,map.get_rect())
-                        root.blit(player[2], (coord_x,coord_y))
-                    
+                        root.blit(player[2], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
+                    elif i >= 2 and i < 9 :
+                        root.blit(map,map.get_rect())
+                        if zePlayerMove.getLastMove() == True :
+                            root.blit(player_walk[2][0], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
+                            
+                        elif zePlayerMove.getLastMove() == False :
+                            root.blit(player_walk[2][1], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
+                    elif i == 9 :
+                        root.blit(map,map.get_rect())
+                        root.blit(player[2], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
+
                     pygame.display.flip()
                     clock.tick(MAX_FPS)
+
+                if zePlayerMove.getLastMove() == True :
+                    zePlayerMove.setLastMove(False)
+
+                elif zePlayerMove.getLastMove() == False :
+                    zePlayerMove.setLastMove(True)
+                
             else:
                 root.blit(map,map.get_rect())
-                root.blit(player[2], (coord_x,coord_y))
+                root.blit(player[2], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
             #print(map_n1)
-
-        elif key_pressed[pygame.K_DOWN]:
-            
+        
+        if key_pressed[pygame.K_DOWN]:
+            line = int(zePlayerMove.getmapPos()[1])
+            row = int(zePlayerMove.getmapPos()[0])
             if map_n1[line+1][row] == 0:
             
-                map_n1[line][row] = 0
-
-                line += 1
-
-                map_n1[line][row] = 2
+                zePlayerMove.setmapPosY(line+1)
 
 
                 for i in range(10):
-                    root.blit(map,map.get_rect())
-                    coord_y+=TILE_HEIGHT/10
                     
-                    if(i%2 != 0):
-                        root.blit(player_walk[3][0], (coord_x,coord_y))
-                    elif(i%2 == 0 and i < 9):
-                        root.blit(player_walk[3][1], (coord_x,coord_y))
+                    zePlayerMove.setrealPosY(zePlayerMove.getrealPos()[1]+TILE_HEIGHT/10)
                     
-                    if(i == 9):
+                    if i == 0 :
                         root.blit(map,map.get_rect())
-                        root.blit(player[3], (coord_x,coord_y))
+                        root.blit(player[3], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
+                    elif i >= 2 and i < 9 :
+                        root.blit(map,map.get_rect())
+                        if zePlayerMove.getLastMove() == True :
+                            root.blit(player_walk[3][0], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
+                            
+                        elif zePlayerMove.getLastMove() == False :
+                            root.blit(player_walk[3][1], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
+                    elif i == 9 :
+                        root.blit(map,map.get_rect())
+                        root.blit(player[3], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
 
                     pygame.display.flip()
                     clock.tick(MAX_FPS)
+
+                if zePlayerMove.getLastMove() == True :
+                    zePlayerMove.setLastMove(False)
+
+                elif zePlayerMove.getLastMove() == False :
+                    zePlayerMove.setLastMove(True)
+                
             else:
                 root.blit(map,map.get_rect())
-                root.blit(player[3], (coord_x,coord_y))
+                root.blit(player[3], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
             #print(map_n1)
 
         pygame.display.update()
