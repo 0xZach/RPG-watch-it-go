@@ -1,4 +1,5 @@
 import numpy as np
+import PlayerMove
 
 __package__ = 'Classes'
 
@@ -20,7 +21,7 @@ class Map:
         # SIZE has constants (might change)
         self.__size = self.__height, self.__width = argHeight,argWidth
 
-        # table 2x2 with the collisions (still need to find another way to not just need glasses for the rest of our lifes)
+        # 2d table with the collisions (still need to find another way to not just need glasses for the rest of our lifes)
         self.__path = argPath
 
         # image file
@@ -31,7 +32,7 @@ class Map:
         return self.__size
     
     def getSizeTiles(self):
-        return self.__path.shape
+        return self.__path
 
     def getfileImage(self):
         return self.__filepath

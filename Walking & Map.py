@@ -18,15 +18,6 @@ from maps import path_BrickTiles
 
 file_absolutePath = str(pathlib.Path('RPG').absolute())
 
-# we get the path via the other file
-map_n1 = path_BrickTiles.PATH
-
-
-# the map is setup in an instance of the Class Map
-zeMap = ClassMap.Map(1100,800, map_n1, file_absolutePath + '\maps\BrickTiles_surface_test.png')
-
-
-
 
 # testing some methods
 # ///////////////////////
@@ -57,6 +48,15 @@ PLAYER_SIZE = PLAYER_HEIGHT,PLAYER_WIDTH = 100,74
 # new way
 # the movement of the player is setup in an instance of the Class Player_Moving
 zePlayerMove = PlayerMove.Player_Moving(np.array([TILE_WIDTH*1,1]),np.array([TILE_HEIGHT*1,1]),True)
+
+
+# we get the path via the other file
+map_n1 = path_BrickTiles.PATH
+
+
+# the map is setup in an instance of the Class Map
+zeMap = ClassMap.Map(1100,800, map_n1, file_absolutePath + '\maps\BrickTiles_surface_test.png', zePlayerMove)
+
 
 # How to load an image and scale it
 map = pygame.image.load(zeMap.getfileImage()).convert()
@@ -178,43 +178,6 @@ while True:
             else:
                 root.blit(map,map.get_rect())
                 root.blit(player[0], (zePlayerMove.getrealPos()[0],zePlayerMove.getrealPos()[1]))
-
-            """ # old version
-            # if the path says it's ok to go there
-            if map_n1[line-1][row] == 0:
-                
-                # we replace the tile the player is on with a 0
-                map_n1[line][row] = 0
-
-                # we move the player
-                line -= 1
-
-                # we replace the new tile with a 2
-                map_n1[line][row] = 2
-
-                # loop to smoothly erase and place a new draw of our player
-                for i in range(10):
-                    root.blit(map,map.get_rect()) # re-draws the background on top of the player
-                    coord_y-=TILE_HEIGHT/10 # move by a bit
-                    
-                    # these if alternate between the left leg and right leg animation in the correct array
-                    if(i%2 != 0):
-                        root.blit(player_walk[0][0], (coord_x,coord_y))
-                    elif(i%2 == 0 and i < 9):
-                        root.blit(player_walk[0][1], (coord_x,coord_y))
-                    
-                    if(i == 9):
-                        root.blit(map,map.get_rect())
-                        root.blit(player[0], (coord_x,coord_y))
-                    
-                    #root.blit(player[0], (coord_x,coord_y)) # re-draws the player with the right direction and the new coordinates
-                    pygame.display.flip() # updates it all
-                    clock.tick(MAX_FPS) # the argument tells how many frames there is per second (here maximum of 15)
-            else:
-                root.blit(map,map.get_rect())
-                root.blit(player[0], (coord_x,coord_y))
-            """
-            #print(map_n1)
         
         elif key_pressed[pygame.K_LEFT]:
             
