@@ -37,7 +37,7 @@ zeMap = ClassMap.Map(1100,800, map_n1, file_absolutePath + '\maps\BrickTiles_sur
 
 pygame.init()
 
-MAX_FPS = 15 # self explanatory *cough*
+MAX_FPS = 30 # self explanatory *cough*
 
 # size of the window and a tile (temporary)
 WIN_SIZE = WIN_WIDTH, WIN_HEIGHT = 1000,1000 # tuple to get a fixed size for the window
