@@ -8,7 +8,7 @@ class Map:
     ||==========================================================||
     || Class name: Map                                          ||
     || parent(s): aucun                                         ||
-    || constructor: Map()                                       ||
+    || constructor: Map(int, int, array, str)                   ||
     || Goal:                                                    ||
     || handle maps                                              ||
     ||==========================================================||
@@ -27,11 +27,12 @@ class Map:
         # image file
         self.__filepath = argImage
     
+    
     # GETs & SETs
     def getSizePx(self):
         return self.__size
     
-    def getSizeTiles(self):
+    def getMapPath(self):
         return self.__path
 
     def getfileImage(self):

@@ -5,13 +5,31 @@ from numpy import array
 
 
 class Player_Moving:
+    """
+    ||==========================================================||
+    || Class name: Player_Moving                                ||
+    || parent(s): aucun                                         ||
+    || constructor: Player_Moving(array,array,bool)             ||
+    || Goal:                                                    ||
+    || Handle the player's coordinates                          ||
+    || Handle the walking animations                            ||
+    ||==========================================================||
+    """
 
+
+    # Constructor
     def __init__(self, posX:array, posY:array, lastMove:bool):
-    
+        
+        # array that contains the real and map coordinates of the player (real,map)
         self.__posX = posX
+
         self.__posY = posY
+
+        # boolean that alternates between true and false to handle smooth walking animations
         self.__lastMove = lastMove
     
+
+    # GETs & SETs
     def getrealPos(self):
         return (self.__posX[0],self.__posY[0])
     
@@ -35,3 +53,6 @@ class Player_Moving:
     
     def setLastMove(self, newMove):
         self.__lastMove = newMove
+    
+
+    # Methods
