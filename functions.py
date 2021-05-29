@@ -49,12 +49,15 @@ def move(map, mapImage, player: Player_Moving, direction: int, root: WinRoot, fa
     # against a wall or later an object the animation plays but withouth changing position
 
     for i in range(10):
+        
+        # updating the real position this time, and only if there is no collision ahead
         if map[lineCheck][rowCheck] == 0:
             if(direction == 0 or direction == 3):
                 player.setrealPosY(player.getrealPos()[1]+ tileMove/player.getVel())
             elif(direction == 1 or direction == 2):
                 player.setrealPosX(player.getrealPos()[0]+ tileMove/player.getVel())
         
+        # animating until the end of the loop
         if i == 0 :
             root.getRoot().blit(mapImage,mapImage.get_rect())
             root.getRoot().blit(facing_sprites[direction], (player.getrealPos()[0],player.getrealPos()[1]))
