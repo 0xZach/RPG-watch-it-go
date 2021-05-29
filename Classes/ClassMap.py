@@ -16,7 +16,7 @@ class Map:
     
     
     # Constructor
-    def __init__(self,argHeight: int,argWidth: int, argPath: np.array, argImage: str):
+    def __init__(self,argHeight: int,argWidth: int, argPath: np.array, argImage: str, x: int, y: int):
         
         # SIZE has constants (might change)
         self.__size = self.__height, self.__width = argHeight,argWidth
@@ -26,6 +26,8 @@ class Map:
 
         # image file
         self.__filepath = argImage
+
+        self.__coordinates = [self.__x, self.__y] = x,y
     
     
     # GETs & SETs
@@ -38,6 +40,11 @@ class Map:
     def getfileImage(self):
         return self.__filepath
     
+    def getCoordinates(self):
+        return self.__coordinates
+    
+    def setCoordinates(self, x, y):
+        self.__coordinates = [x,y]
     
     # Methodes
     def toString(self):

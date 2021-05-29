@@ -1,4 +1,4 @@
-from numpy import tile
+from numpy import array, tile
 import pygame as pg
 
 
@@ -54,6 +54,9 @@ class WinRoot:
     # Methods
     def ticking(self, ticking):
         self.__clock.tick(ticking)
+    
+    def fill(self, color:array):
+        self.__root.fill(color)
     
 
 

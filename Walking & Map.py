@@ -42,11 +42,11 @@ player_walk_loaded = np.array(player_walk_loaded) # we finally convert the pytho
 
 # the movement of the player is setup in an instance of the Class Player_Moving
 # we need an array with the real position and the map position, and then the boolean of the last move
-player = PlayerMove.Player_Moving(np.array([root.getTileSize()[0]*1,1]),np.array([root.getTileSize()[1]*1,1]),True, 10)
+player = PlayerMove.Player_Moving(np.array([root.getTileSize()[0]*5,5]),np.array([root.getTileSize()[1]*5,5]),True, 10)
 
 
 # the map is setup in an instance of the Class Map
-zeMap = ClassMap.Map(1100,800, path_BrickTiles.PATH, file_absolutePath + map_n1)
+zeMap = ClassMap.Map(1100,800, path_BrickTiles.PATH, file_absolutePath + map_n1, 0, 0)
 
 
 # How to load an image and scale it
@@ -54,8 +54,9 @@ mapImage = pygame.image.load(zeMap.getfileImage()).convert()
 mapImage = pygame.transform.scale(mapImage,(1100,800))
 
 
+
 # adds the image of the map **on top** of the other image(s), here it's only on top of the background
-root.getRoot().blit(mapImage,mapImage.get_rect())
+root.getRoot().blit(mapImage,zeMap.getCoordinates())
 
 # Display the character **after** the background, so it will be **on top**
 root.getRoot().blit(player_face_loaded[3], (player.getrealPos()[0], player.getrealPos()[1]))
@@ -75,16 +76,16 @@ while True:
     # with pygame.key.get_pressed() the walking animation repeats itself while the key isn't released
     # providing a smoother walk
     if pygame.key.get_pressed()[pygame.K_UP]:     
-        move(zeMap.getMapPath(), mapImage, player, 0, root, player_face_loaded, player_walk_loaded)
+        move(zeMap, mapImage, player, 0, root, player_face_loaded, player_walk_loaded)
     
     if pygame.key.get_pressed()[pygame.K_LEFT]:
-        move(zeMap.getMapPath(), mapImage, player, 1, root, player_face_loaded, player_walk_loaded)
+        move(zeMap, mapImage, player, 1, root, player_face_loaded, player_walk_loaded)
     
     if pygame.key.get_pressed()[pygame.K_RIGHT]:
-        move(zeMap.getMapPath(), mapImage, player, 2, root, player_face_loaded, player_walk_loaded)
+        move(zeMap, mapImage, player, 2, root, player_face_loaded, player_walk_loaded)
     
     if pygame.key.get_pressed()[pygame.K_DOWN]:
-        move(zeMap.getMapPath(), mapImage, player, 3, root, player_face_loaded, player_walk_loaded)
+        move(zeMap, mapImage, player, 3, root, player_face_loaded, player_walk_loaded)
     
     pygame.display.update()
     root.ticking(root.getFPS())
