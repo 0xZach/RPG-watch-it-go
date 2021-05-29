@@ -18,7 +18,7 @@ class Player_Moving:
 
 
     # Constructor
-    def __init__(self, posX:array, posY:array, lastMove:bool):
+    def __init__(self, posX:array, posY:array, lastMove:bool, velocity: int):
         
         # array that contains the real and map coordinates of the player (real,map)
         self.__posX = posX
@@ -27,6 +27,9 @@ class Player_Moving:
 
         # boolean that alternates between true and false to handle smooth walking animations
         self.__lastMove = lastMove
+
+        # velocity, the number of pixels the player moves per frame
+        self.__velocity = velocity
     
 
     # GETs & SETs
@@ -53,6 +56,12 @@ class Player_Moving:
     
     def setLastMove(self, newMove):
         self.__lastMove = newMove
+    
+    def getVel(self):
+        return self.__velocity
+    
+    def setVel(self, newVel):
+        self.__velocity = newVel
     
 
     # Methods
