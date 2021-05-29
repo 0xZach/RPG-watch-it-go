@@ -1,5 +1,4 @@
 import numpy as np
-import PlayerMove
 
 __package__ = 'Classes'
 

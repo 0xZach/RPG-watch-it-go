@@ -1,7 +1,7 @@
+from numpy import array
+
 
 __package__ = 'Classes'
-
-from numpy import array
 
 
 class Player_Moving:
