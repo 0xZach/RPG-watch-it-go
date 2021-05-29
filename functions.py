@@ -60,7 +60,6 @@ def move(map: Map, mapImage, player: Player_Moving, direction: int, root: WinRoo
     # against a wall or later an object the animation plays but withouth changing position
 
 
-    print(tileMove/player.getVel())
 
     for i in range(10):
 
@@ -69,11 +68,9 @@ def move(map: Map, mapImage, player: Player_Moving, direction: int, root: WinRoo
 
             if(direction == 0 or direction == 3):
                 map.setCoordinates(map.getCoordinates()[0],map.getCoordinates()[1]+(-tileMove)/player.getVel())
-                print(map.getCoordinates()[1],player.getrealPos()[1])
 
             elif(direction == 1 or direction == 2):
                 map.setCoordinates(map.getCoordinates()[0]+ (-tileMove)/player.getVel(),map.getCoordinates()[1])
-                print(map.getCoordinates()[0],player.getrealPos()[0])
         
         # animating until the end of the loop
         if i == 0 :
