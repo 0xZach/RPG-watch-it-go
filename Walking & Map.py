@@ -42,11 +42,22 @@ player_walk_loaded = np.array(player_walk_loaded) # we finally convert the pytho
 
 # the movement of the player is setup in an instance of the Class Player_Moving
 # we need an array with the real position and the map position, and then the boolean of the last move
-player = PlayerMove.Player_Moving(np.array([root.getTileSize()[0]*5,5]),np.array([root.getTileSize()[1]*5,5]),True, 10)
+player = PlayerMove.Player_Moving(
+    np.array([(root.getSize()[0] - PLAYER_WIDTH)/2,5]),
+    np.array([(root.getSize()[1] - PLAYER_HEIGHT)/2,5]),True, 10
+    )
+
 
 
 # the map is setup in an instance of the Class Map
-zeMap = ClassMap.Map(1100,800, path_BrickTiles.PATH, file_absolutePath + map_n1, 0, 0)
+zeMap = ClassMap.Map(
+    1100,800,
+    path_BrickTiles.PATH, 
+    file_absolutePath + map_n1, 
+    (root.getSize()[0] - PLAYER_WIDTH)/2 - root.getTileSize()[0] * player.getmapPos()[0], 
+    (root.getSize()[0] - PLAYER_WIDTH)/2 - root.getTileSize()[1] * player.getmapPos()[1]
+    )
+# you substract the requiered to get to the player by the number of tiles he is on
 
 
 # How to load an image and scale it

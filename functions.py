@@ -30,23 +30,23 @@ def move(map: Map, mapImage, player: Player_Moving, direction: int, root: WinRoo
     if(direction == 0):
         rowCheck = row
         lineCheck = line-1
-        tileMove = (- root.getTileSize()[1])
-        surfaceY = 100
+        tileMove = (-root.getTileSize()[1])
+        
     elif(direction == 1):
         rowCheck = row-1
         lineCheck = line
-        tileMove = (- root.getTileSize()[0])
-        surfaceX = 100
+        tileMove = (-root.getTileSize()[0])
+
     elif(direction == 2):
         rowCheck = row+1
         lineCheck = line
         tileMove = (root.getTileSize()[0])
-        surfaceX = -100
+
     elif(direction == 3):
         rowCheck = row
         lineCheck = line+1
         tileMove = (root.getTileSize()[1])
-        surfaceY = -100
+    
 
     # when the entity can walk
     if mapPath[lineCheck][rowCheck] == 0:
@@ -60,7 +60,7 @@ def move(map: Map, mapImage, player: Player_Moving, direction: int, root: WinRoo
     # against a wall or later an object the animation plays but withouth changing position
 
 
-
+    print(tileMove/player.getVel())
 
     for i in range(10):
 
@@ -68,13 +68,12 @@ def move(map: Map, mapImage, player: Player_Moving, direction: int, root: WinRoo
         if mapPath[lineCheck][rowCheck] == 0:
 
             if(direction == 0 or direction == 3):
-                map.setCoordinates(map.getCoordinates()[0],map.getCoordinates()[1]+surfaceY/player.getVel())
-                player.setrealPosY(player.getrealPos()[1]+ tileMove/player.getVel())
+                map.setCoordinates(map.getCoordinates()[0],map.getCoordinates()[1]+(-tileMove)/player.getVel())
+                print(map.getCoordinates()[1],player.getrealPos()[1])
 
             elif(direction == 1 or direction == 2):
-                map.setCoordinates(map.getCoordinates()[0]+surfaceX/player.getVel(),map.getCoordinates()[1])
-                player.setrealPosX(player.getrealPos()[0]+ tileMove/player.getVel())
-                
+                map.setCoordinates(map.getCoordinates()[0]+ (-tileMove)/player.getVel(),map.getCoordinates()[1])
+                print(map.getCoordinates()[0],player.getrealPos()[0])
         
         # animating until the end of the loop
         if i == 0 :
