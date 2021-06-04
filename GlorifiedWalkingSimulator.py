@@ -6,9 +6,9 @@ import pathlib
 
 __package__ = 'RPG'
 
-from Classes import ClassMap
-from Classes import PlayerMove
-from Classes import WinControl
+from Classes.ClassMap import Map
+from Classes.PlayerMove import Player_Moving
+from Classes.WinControl import WinRoot
 from maps import path_BrickTiles
 from functions import move,loadImages
 from character.Images_paths import player_face, player_walk, map_n1
@@ -17,7 +17,7 @@ file_absolutePath = str(pathlib.Path('RPG').absolute())
 
 
 # creates the window with the width, height, and ratio of one tile
-root = WinControl.WinRoot(1000,1000,10)
+root = WinRoot(1000,1000,10)
 
 root.setFPS(30) # sets the max frames of actions per second
 
@@ -42,7 +42,7 @@ player_walk_loaded = np.array(player_walk_loaded) # we finally convert the pytho
 
 # the movement of the player is setup in an instance of the Class Player_Moving
 # we need an array with the real position and the map position, and then the boolean of the last move
-player = PlayerMove.Player_Moving(
+player = Player_Moving(
     np.array([(root.getSize()[0] - PLAYER_WIDTH)/2,5]),
     np.array([(root.getSize()[1] - PLAYER_HEIGHT)/2,5]),True, 10
     )
@@ -50,7 +50,7 @@ player = PlayerMove.Player_Moving(
 
 
 # the map is setup in an instance of the Class Map
-zeMap = ClassMap.Map(
+zeMap = Map(
     1100,800,
     path_BrickTiles.PATH, 
     file_absolutePath + map_n1, 

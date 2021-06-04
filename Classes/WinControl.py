@@ -35,6 +35,8 @@ class WinRoot:
 
         self.__clock = pg.time.Clock()
     
+
+    # GETs & SETs
     def getSize(self):
         return self.__size
     
@@ -57,19 +59,3 @@ class WinRoot:
     
     def fill(self, color:array):
         self.__root.fill(color)
-    
-
-
-
-
-        
-    
-    
-    
-    # GETs & SETs
-    
-    
-    
-    
-    # Methods
-    
