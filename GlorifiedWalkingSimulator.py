@@ -51,14 +51,22 @@ player = Player_Moving(
 
 # the map is setup in an instance of the Class Map
 zeMap = Map(
-    1100,800,
-    path_BrickTiles.PATH, 
-    file_absolutePath + map_n1, 
-    (root.getSize()[0] - PLAYER_WIDTH)/2 - root.getTileSize()[0] * player.getmapPos()[0], 
+    len(path_BrickTiles.PATH)*root.getTileSize()[0],     # width
+    len(path_BrickTiles.PATH[0])*root.getTileSize()[0],  # height
+    path_BrickTiles.PATH,                                # map walkable path
+    file_absolutePath + map_n1,                          # file path to the map image
+    (root.getSize()[0] - PLAYER_WIDTH)/2 - root.getTileSize()[0] * player.getmapPos()[0],
     (root.getSize()[0] - PLAYER_WIDTH)/2 - root.getTileSize()[1] * player.getmapPos()[1]
-    )
-# you substract the requiered to get to the player by the number of tiles he is on
-
+    ) # calculate the position of the map to the player's original tile placement
+# ||---------------------------------------------------------------||
+# here's the math as i recall it:
+#
+# (width or height to the player's place) 
+#
+# minus
+#  
+# (size of a tile multiplied by the number of tiles to the player)
+# ||---------------------------------------------------------------||
 
 # How to load an image and scale it
 mapImage = pygame.image.load(zeMap.getfileImage()).convert()
