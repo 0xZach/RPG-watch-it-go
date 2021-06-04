@@ -58,15 +58,15 @@ zeMap = Map(
     (root.getSize()[0] - PLAYER_WIDTH)/2 - root.getTileSize()[0] * player.getmapPos()[0],
     (root.getSize()[0] - PLAYER_WIDTH)/2 - root.getTileSize()[1] * player.getmapPos()[1]
     ) # calculate the position of the map to the player's original tile placement
-# ||---------------------------------------------------------------||
-# here's the math as i recall it:
-#
-# (width or height to the player's place) 
-#
-# minus
-#  
-# (size of a tile multiplied by the number of tiles to the player)
-# ||---------------------------------------------------------------||
+# ||-----------------------------------------------------------------||
+# || here's the math as i recall it:                                 ||
+# ||                                                                 ||
+# || (width or height to the player's place)                         ||
+# ||                                                                 ||
+# || minus                                                           ||
+# ||                                                                 ||     
+# || (size of a tile multiplied by the number of tiles to the player)||
+# ||-----------------------------------------------------------------||
 
 # How to load an image and scale it
 mapImage = pygame.image.load(zeMap.getfileImage()).convert()
