@@ -27,16 +27,15 @@ PLAYER_SIZE = PLAYER_HEIGHT,PLAYER_WIDTH = 100,74
 # load the facing animations
 player_face_loaded = np.array([loadImages(i,PLAYER_WIDTH,PLAYER_HEIGHT) for i in player_face])
 
-# load the walking animations since it's a 2D array, can surely be optimized but my brain isn't smart enough
+# load the walking animations since it's a 2D array
 player_walk_loaded = []
-second_dimension = []
 
 for i in player_walk: # we get the first dimension/array
+    second_dimension = []
     for j in range(len(i)):
         # and we load into a temp variable the images from the second dimension
         second_dimension.append(loadImages(i[j],PLAYER_WIDTH,PLAYER_HEIGHT))
     player_walk_loaded.append(second_dimension) # we had the loaded images to the right variable
-    second_dimension = []
 player_walk_loaded = np.array(player_walk_loaded) # we finally convert the python.list into a numpy.array
 
 
