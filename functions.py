@@ -114,6 +114,6 @@ def move(map: Map, mapImage, player: Player_Moving, direction: int, root: WinRoo
 def loadImages(imagePath, width, height):
 
     # get absolute path to /RPG
-    file_absolutePath = str(pathlib.Path('RPG').absolute())
+    file_absolutePath = str(pathlib.Path(__file__).parent.absolute())
 
     return pg.transform.scale(pg.image.load(file_absolutePath + imagePath).convert_alpha(), (width,height))

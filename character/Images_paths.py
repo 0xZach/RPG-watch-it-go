@@ -45,6 +45,8 @@ if platform == "win32":
 
     map_n1 = '\maps\BrickTiles_surface_test.png'
 
+    map_n2 = '\maps\\bigMap_01.png'
+
 elif platform == 'linux' or platform == 'linux2':
     # arrays to contain the different sprites
     player_face = array([
@@ -86,3 +88,5 @@ elif platform == 'linux' or platform == 'linux2':
 
 
     map_n1 = '/maps/BrickTiles_surface_test.png'
+
+    map_n2 = '/maps/bigMap_01.png'

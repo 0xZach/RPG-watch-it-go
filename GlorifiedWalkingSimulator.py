@@ -11,10 +11,9 @@ from Classes.PlayerMove import Player_Moving
 from Classes.WinControl import WinRoot
 from maps import path_BrickTiles
 from functions import move,loadImages
-from character.Images_paths import player_face, player_walk, map_n1
+from character.Images_paths import player_face, player_walk, map_n1, map_n2
 
-file_absolutePath = str(pathlib.Path('RPG').absolute())
-
+file_absolutePath = str(pathlib.Path(__file__).parent.absolute())
 
 # creates the window with the width, height, and ratio of one tile
 root = WinRoot(1000,1000,10)
@@ -35,25 +34,27 @@ for i in player_walk: # we get the first dimension/array
     for j in range(len(i)):
         # and we load into a temp variable the images from the second dimension
         second_dimension.append(loadImages(i[j],PLAYER_WIDTH,PLAYER_HEIGHT))
-    player_walk_loaded.append(second_dimension) # we had the loaded images to the right variable
+    player_walk_loaded.append(second_dimension) # we add the loaded images to the right variable
 player_walk_loaded = np.array(player_walk_loaded) # we finally convert the python.list into a numpy.array
 
 
 # the movement of the player is setup in an instance of the Class Player_Moving
 # we need an array with the real position and the map position, and then the boolean of the last move
 player = Player_Moving(
-    np.array([(root.getSize()[0] - PLAYER_WIDTH)/2,5]),
-    np.array([(root.getSize()[1] - PLAYER_HEIGHT)/2,5]),True, 10
+    np.array([(root.getSize()[1] - PLAYER_WIDTH)/2,1]),     # X position
+    np.array([(root.getSize()[0] - PLAYER_HEIGHT)/2,1]),    # Y position
+    True,                                                   # last move
+    10                                                      # velocity
     )
 
 
 
 # the map is setup in an instance of the Class Map
 zeMap = Map(
-    len(path_BrickTiles.PATH)*root.getTileSize()[0],     # width
-    len(path_BrickTiles.PATH[0])*root.getTileSize()[0],  # height
-    path_BrickTiles.PATH,                                # map walkable path
-    file_absolutePath + map_n1,                          # file path to the map image
+    int(len(path_BrickTiles.PATH_N1[1])*root.getTileSize()[0]),  # width
+    int(len(path_BrickTiles.PATH_N1[0])*root.getTileSize()[1]),  # height
+    path_BrickTiles.PATH_N1,                                     # map walkable path
+    file_absolutePath + map_n1,                                  # file path to the map image
     (root.getSize()[0] - PLAYER_WIDTH)/2 - root.getTileSize()[0] * player.getmapPos()[0],
     (root.getSize()[0] - PLAYER_WIDTH)/2 - root.getTileSize()[1] * player.getmapPos()[1]
     ) # calculate the position of the map to the player's original tile placement
@@ -69,7 +70,7 @@ zeMap = Map(
 
 # How to load an image and scale it
 mapImage = pygame.image.load(zeMap.getfileImage()).convert()
-mapImage = pygame.transform.scale(mapImage,(1100,800))
+mapImage = pygame.transform.scale(mapImage,(zeMap.getSizePx()[0],zeMap.getSizePx()[1]))
 
 
 
@@ -86,7 +87,7 @@ while True:
 
     for event in pygame.event.get():
         
-        if event.type == QUIT or key_pressed[pygame.K_F4]:
+        if event.type == QUIT:
             pygame.quit()
             sys.exit()
     
